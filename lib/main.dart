@@ -1,4 +1,6 @@
+import 'package:drika_flores/services/api-service/api-service.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -86,7 +88,8 @@ class FirstPage extends StatelessWidget {
         child: ElevatedButton(
           child: Text('Ir para a Segunda Página'),
           onPressed: () {
-            Navigator.pushNamed(context, '/second');
+            // Navigator.pushNamed(context, '/second');
+            requestTeste();
           },
         ),
       ),
@@ -111,6 +114,21 @@ class SecondPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+requestTeste() async {
+  final baseUrl = ApiService('https://jsonplaceholder.typicode.com'); // Substitua pela sua URL base
+
+  try {
+    final data = await baseUrl.get('/posts/1');
+    print(data);
+
+    final newData = {'title': 'Novo post', 'body': 'Conteúdo do novo post', 'userId': 1};
+    final createdPost = await baseUrl.post('/posts', newData);
+    print('Post ok, $createdPost');
+  } catch (e) {
+    print('Erro na requisição: $e');
   }
 }
 
