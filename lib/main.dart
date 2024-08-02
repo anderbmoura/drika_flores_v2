@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+  requestTeste();
 }
 
 class MyApp extends StatelessWidget {
@@ -80,17 +81,47 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Primeira tela'),
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('Ir para a Segunda Página'),
-          onPressed: () {
-            // Navigator.pushNamed(context, '/second');
-            requestTeste();
-          },
+
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(221, 211, 238, 1.0),
+              Color.fromRGBO(230, 224, 236, 1.0),
+            ],
+          ),
+        ),
+        child:       Center(
+          child: ElevatedButton(
+            child: Text('Ir para a Segunda Página'),
+            onPressed: () {
+              // Navigator.push(
+              //   context,
+              //   PageRouteBuilder(
+              //     pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+              //     transitionsBuilder: (context, animation,
+              //         secondaryAnimation, child) {
+              //   const begin = Offset(1.0, 0.0);
+              //   const end = Offset.zero;
+              //   const curve = Curves.easeInOut;
+              //
+              //   var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              //
+              //   var offsetAnimation = animation.drive(tween);
+              //
+              //   return SlideTransition(
+              //   position: offsetAnimation,
+              //   child: child,
+              //
+              //   );
+              //   },
+              //   ),
+              // );
+
+            },
+          ),
         ),
       ),
     );
@@ -118,15 +149,15 @@ class SecondPage extends StatelessWidget {
 }
 
 requestTeste() async {
-  final baseUrl = ApiService('https://jsonplaceholder.typicode.com'); // Substitua pela sua URL base
+  final baseUrl = ApiService(); // Substitua pela sua URL base
 
   try {
-    final data = await baseUrl.get('/posts/1');
+    final data = await baseUrl.get('v1/merchant');
     print(data);
 
-    final newData = {'title': 'Novo post', 'body': 'Conteúdo do novo post', 'userId': 1};
-    final createdPost = await baseUrl.post('/posts', newData);
-    print('Post ok, $createdPost');
+    // final newData = {'title': 'Novo post', 'body': 'Conteúdo do novo post', 'userId': 1};
+    // final createdPost = await baseUrl.post('/posts', newData);
+    // print('Post ok, $createdPost');
   } catch (e) {
     print('Erro na requisição: $e');
   }

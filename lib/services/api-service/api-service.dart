@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:drika_flores/configs/configs.dart';
 
 class ApiService {
   final String _baseUrl;
 
-  ApiService(this._baseUrl);
+  ApiService() : _baseUrl = Config.apiUrl;
 
   Future<dynamic> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$_baseUrl$endpoint'));
+    final response = await http.get(
+        Uri.parse('$_baseUrl$endpoint'),
+      headers: {'X-API-KEY': Config.token}
+    );
     return _handleResponse(response);
   }
 
